@@ -39,6 +39,27 @@ type USPS struct {
 	Client     USPSClient
 }
 
+type CloseTimes struct {
+	M  string `xml:"M,omitempty"`
+	Tu string `xml:"Tu,omitempty"`
+	W  string `xml:"W,omitempty"`
+	Th string `xml:"Th,omitempty"`
+	F  string `xml:"F,omitempty"`
+	Sa string `xml:"Sa,omitempty"`
+	Su string `xml:"Su,omitempty"`
+	H  string `xml:"H,omitempty"`
+}
+
+type TransMsg struct {
+	MsgCode string `xml:"MsgCode,omitempty"`
+	Msg     string `xml:"Msg,omitempty"`
+}
+
+type NonExpeditedExceptions struct {
+	NonExpeditedMsg      string `xml:"NonExpeditedMsg,omitempty"`
+	NonExpeditedTransMsg []TransMsg `xml:"NonExpeditedTransMsg,omitempty"`
+}
+
 type SDCGetLocationsRequest struct {
 	XMLName         xml.Name `xml:"SDCGetLocationsRequest"`
 	USERID          string   `xml:"USERID,attr"`
@@ -86,10 +107,7 @@ type SDCGetLocationsResponse struct {
 			} `xml:"Location,omitempty"`
 		} `xml:"Commitment,omitempty"`
 		ExpeditedMessage  string `xml:"ExpeditedMessage,omitempty"`
-		ExpeditedTransMsg []struct {
-			MsgCode string `xml:"MsgCode,omitempty"`
-			Msg     string `xml:"Msg,omitempty"`
-		} `xml:"ExpeditedTransMsg,omitempty"`
+		ExpeditedTransMsg []TransMsg `xml:"ExpeditedTransMsg,omitempty"`
 	} `xml:"Expedited,omitempty"`
 	NonExpedited struct {
 		MailClass            string `xml:"MailClass,omitempty"`
@@ -109,23 +127,8 @@ type SDCGetLocationsResponse struct {
 					RAUName         string `xml:"RAUName,omitempty"`
 					Street          string `xml:"Street,omitempty"`
 					ZIP             string `xml:"ZIP,omitempty"`
-					CloseTimes      struct {
-						M  string `xml:"M,omitempty"`
-						Tu string `xml:"Tu,omitempty"`
-						W  string `xml:"W,omitempty"`
-						Th string `xml:"Th,omitempty"`
-						F  string `xml:"F,omitempty"`
-						Sa string `xml:"Sa,omitempty"`
-						Su string `xml:"Su,omitempty"`
-						H  string `xml:"H,omitempty"`
-					} `xml:"CloseTimes,omitempty"`
-					NonExpeditedExceptions struct {
-						NonExpeditedMsg      string `xml:"NonExpeditedMsg,omitempty"`
-						NonExpeditedTransMsg []struct {
-							MsgCode string `xml:"MsgCode,omitempty"`
-							Msg     string `xml:"Msg,omitempty"`
-						} `xml:"NonExpeditedTransMsg,omitempty"`
-					} `xml:"NonExpeditedExceptions,omitempty"`
+					CloseTimes      CloseTimes `xml:"CloseTimes,omitempty"`
+					NonExpeditedExceptions NonExpeditedExceptions `xml:"NonExpeditedExceptions,omitempty"`
 					City  string `xml:"City,omitempty"`
 					State string `xml:"State,omitempty"`
 				} `xml:"Location,omitempty"`
@@ -135,10 +138,7 @@ type SDCGetLocationsResponse struct {
 				OverMaxResults       string `xml:"OverMaxResults,omitempty"`
 				NoHFPULocInd         string `xml:"NoHFPULocInd,omitempty"`
 				NonExpeditedWTMsg    string `xml:"NonExpeditedWTMsg,omitempty"`
-				NonExpeditedTransMsg struct {
-					MsgCode string `xml:"MsgCode,omitempty"`
-					Msg     string `xml:"Msg,omitempty"`
-				} `xml:"NonExpeditedTransMsg,omitempty"`
+				NonExpeditedTransMsg []TransMsg `xml:"NonExpeditedTransMsg,omitempty"`
 			} `xml:"HFPUGlobalExcept,omitempty"`
 		} `xml:"HFPU,omitempty"`
 	} `xml:"NonExpedited,omitempty"`

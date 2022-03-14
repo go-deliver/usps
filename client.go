@@ -7,10 +7,13 @@ import (
 )
 
 const (
+	// Base API endpoint for development environment
 	DevHTTP  string = "https://stg-secure.shippingapis.com/ShippingAPI.dll?API="
+	// Base API endpoint for production environment
 	ProdHTTP string = "https://secure.shippingapis.com/ShippingAPI.dll?API="
 )
 
+// Starts up USPS Go client and returns a pointer for the client 
 func InitUSPS(username, password string, production bool) *USPS {
 	usps := new(USPS)
 	usps.Username = username
@@ -20,7 +23,7 @@ func InitUSPS(username, password string, production bool) *USPS {
 	}
 
 	usps.Client = &API{
-		HttpClient: getHttpClient(),
+		HttpClient: getHTTPClient(),
 		Production: production,
 	}
 
@@ -67,6 +70,6 @@ func (c *API) call(requestURL string) ([]byte, error) {
 	return body, nil
 }
 
-func getHttpClient() HttpClient {
+func getHTTPClient() HttpClient {
 	return http.DefaultClient
 }

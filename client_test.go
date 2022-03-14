@@ -2,13 +2,14 @@ package usps
 
 import (
 	"encoding/json"
+	"os"
 	"testing"
 )
 
 func TestClient (t *testing.T){
-	const (
-		userID = "USERID"
-		pass = "PASSWORD"
+	var (
+		userID = os.Getenv("USERID")
+		pass = os.Getenv("PASS")
 	)
 
 	USPS := InitUSPS(userID, pass, true)
@@ -21,7 +22,7 @@ func TestClient (t *testing.T){
 	}
 	resp, err := USPS.ServiceDeliveryCalculatorGetLocations(&request)
 	if err != nil {
-		t.Fatal("Can't get a response", err)
+		t.Fatal(err)
 	}
 
 	str, _ := json.MarshalIndent(resp, "", " ")
