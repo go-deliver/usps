@@ -12,7 +12,7 @@ func TestClient (t *testing.T){
 		pass = os.Getenv("PASS")
 	)
 
-	USPS := InitUSPS(userID, pass, true)
+	USPS := Init(userID, pass, true)
 
 	request := SDCGetLocationsRequest{
 		USERID: userID,

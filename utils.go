@@ -7,39 +7,33 @@ import (
 	"strings"
 )
 
-
-func createReq(api string, r interface{}) (string, error) {
+func createRequest(api string, r interface{}) (string, error) {
 	xmlOut, err := xml.Marshal(r)
 	if err != nil {
 		return "", err
 	}
 
 	var requestURL bytes.Buffer
-	requestURL.WriteString(api + "&XML=")
-	requestURL.WriteString(url.QueryEscape(string(xmlOut)))
+	requestURL.WriteString(api + "&XML=" + url.QueryEscape(string(xmlOut)))
 
 	return requestURL.String(), nil
 }
 
-// Parses the xml
+// parseXML is a utility function to convert bytes to structs
 func parseXML(xmlBytes []byte, s interface{}) error {
-	// Ignores generic xml headers
+	// Ignores generic xml headers once
 	body := strings.Replace(string(xmlBytes), xml.Header, "", 1)
 
 	// Check to see if USPS returns an xml Error (Not an error in Go)
-	e := new(Error)
-	err := xml.Unmarshal([]byte(body), &e)
+	xmlError := new(Error)
+	err := xml.Unmarshal([]byte(body), &xmlError)
 	if err != nil {
 		return err
 	}
-	if e != nil && e.Number != "" {
-		return e
+	if xmlError != nil && xmlError.Number != "" {
+		return xmlError
 	}
 
 	// Proceed to unmarshal the body
 	return xml.Unmarshal([]byte(body), &s)
-}
-
-func (e *Error) Error() string {
-	return e.Description
 }

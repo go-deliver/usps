@@ -7,14 +7,14 @@ import (
 )
 
 const (
-	// Base API endpoint for development environment
+	// DevHTTP is the base API endpoint for development environment
 	DevHTTP  string = "https://stg-secure.shippingapis.com/ShippingAPI.dll?API="
-	// Base API endpoint for production environment
+	// ProdHTTP is the base API endpoint for production environment
 	ProdHTTP string = "https://secure.shippingapis.com/ShippingAPI.dll?API="
 )
 
-// Starts up USPS Go client and returns a pointer for the client 
-func InitUSPS(username, password string, production bool) *USPS {
+// Init starts up the USPS client and returns a pointer for the client 
+func Init(username, password string, production bool) *USPS {
 	usps := new(USPS)
 	usps.Username = username
 	usps.Password = password
@@ -23,15 +23,15 @@ func InitUSPS(username, password string, production bool) *USPS {
 	}
 
 	usps.Client = &API{
-		HttpClient: getHTTPClient(),
+		HTTPClient: http.DefaultClient,
 		Production: production,
 	}
 
 	return usps
 }
 
-func (c *API) do(request USPSRequest, result interface{}) error {
-	reqStr, err := request.toHTTPRequestStr(c.Production)
+func (c *API) do(request Request, result interface{}) error {
+	reqStr, err := request.toHTTP(c.Production)
 	if err != nil {
 		return err
 	}
@@ -56,7 +56,7 @@ func (c *API) call(requestURL string) ([]byte, error) {
 	}
 	currentURL += requestURL
 
-	resp, err := c.HttpClient.Get(currentURL)
+	resp, err := c.HTTPClient.Get(currentURL)
 	if err != nil {
 		return nil, err
 	}
@@ -70,6 +70,29 @@ func (c *API) call(requestURL string) ([]byte, error) {
 	return body, nil
 }
 
-func getHTTPClient() HttpClient {
-	return http.DefaultClient
+/* Types */
+
+type USPS struct {
+	Username   string
+	Password   string
+	Production bool `default:"false"`
+	Client     Client
+}
+
+// HTTPClient is the http.Client wrapper that utilizes only GET when performing calls from Client
+type HTTPClient interface {
+	Get(url string) (resp *http.Response, err error)
+}
+
+// Client is the interface that calls the USPS API
+type Client interface {
+	do(request Request, result interface{}) error
+	call(requestURL string) ([]byte, error)
+}
+
+// API is the the base struct for USPS API Interface
+type API struct {
+	Client
+	HTTPClient
+	Production bool
 }
