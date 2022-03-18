@@ -1,8 +1,5 @@
 package usps
 
-func (r *SDCGetLocationsRequest) toHTTPRequestStr(bool) (string, error) {
-	return createReq("SDCGetLocations", r)
-}
 /*
 
 SDCGetLocations Web Tools API
@@ -25,4 +22,8 @@ func (U *USPS) ServiceDeliveryCalculatorGetLocations(request *SDCGetLocationsReq
 	err := U.Client.do(request, result)
 
 	return *result, err
+}
+
+func (r *SDCGetLocationsRequest) toHTTPRequestStr(bool) (string, error) {
+	return createReq("SDCGetLocations", r)
 }

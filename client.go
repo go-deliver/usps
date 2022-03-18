@@ -41,7 +41,7 @@ func (c *API) do(request USPSRequest, result interface{}) error {
 		return err
 	}
 	if body == nil {
-		return errors.New("error on request")
+		return errors.New("request error")
 	}
 
 	return parseXML(body, result)

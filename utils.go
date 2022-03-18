@@ -7,9 +7,6 @@ import (
 	"strings"
 )
 
-func urlEncode(urlToEncode string) string {
-	return url.QueryEscape(urlToEncode)
-}
 
 func createReq(api string, r interface{}) (string, error) {
 	xmlOut, err := xml.Marshal(r)
@@ -19,13 +16,17 @@ func createReq(api string, r interface{}) (string, error) {
 
 	var requestURL bytes.Buffer
 	requestURL.WriteString(api + "&XML=")
-	requestURL.WriteString(urlEncode(string(xmlOut)))
+	requestURL.WriteString(url.QueryEscape(string(xmlOut)))
 
 	return requestURL.String(), nil
 }
 
+// Parses the xml
 func parseXML(xmlBytes []byte, s interface{}) error {
+	// Ignores generic xml headers
 	body := strings.Replace(string(xmlBytes), xml.Header, "", 1)
+
+	// Check to see if USPS returns an xml Error (Not an error in Go)
 	e := new(Error)
 	err := xml.Unmarshal([]byte(body), &e)
 	if err != nil {
@@ -35,6 +36,7 @@ func parseXML(xmlBytes []byte, s interface{}) error {
 		return e
 	}
 
+	// Proceed to unmarshal the body
 	return xml.Unmarshal([]byte(body), &s)
 }
 
