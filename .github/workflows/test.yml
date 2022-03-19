@@ -23,7 +23,7 @@ jobs:
 
     name: Go ${{ matrix.go }} Test
     # The type of runner that the job will run on
-    runs-on: [windows-latest, macos-latest, ubuntu-latest]
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
