@@ -1,7 +1,7 @@
 package usps
 
 import (
-	"encoding/json"
+	"encoding/xml"
 	"os"
 	"testing"
 )
@@ -25,7 +25,7 @@ func TestClient (t *testing.T){
 		t.Fatal(err)
 	}
 
-	str, _ := json.MarshalIndent(resp, "", " ")
+	str, _ := xml.MarshalIndent(resp, "", " ")
 
 	t.Log(string(str))
 }
