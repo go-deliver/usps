@@ -27,7 +27,7 @@ jobs:
 
     strategy:
       matrix:
-        go: ['1.13', '1.14.0', '1.15.0', '1.16.0', '1.17.0']
+        go: ['1.16', '1.17', '1.18']
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
