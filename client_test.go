@@ -9,10 +9,10 @@ import (
 func TestClient (t *testing.T){
 	var (
 		userID = os.Getenv("USERID")
-		pass = os.Getenv("PASS")
+		pass = "PASS"
 	)
 
-	USPS := InitUSPS(userID, pass, true)
+	USPS := Init(userID, pass, true)
 
 	request := SDCGetLocationsRequest{
 		USERID: userID,
