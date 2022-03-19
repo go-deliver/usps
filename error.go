@@ -1,5 +1,6 @@
 package usps
 
+// Error is returned from USPS API
 type Error struct {
 	Number      string `xml:"Number"`
 	Description string `xml:"Description,omitempty"`

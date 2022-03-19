@@ -9,7 +9,7 @@ import (
 func TestClient (t *testing.T){
 	var (
 		userID = os.Getenv("USERID")
-		pass = os.Getenv("PASS")
+		pass = "PASS"
 	)
 
 	USPS := Init(userID, pass, true)

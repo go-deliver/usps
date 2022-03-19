@@ -72,6 +72,7 @@ func (c *API) call(requestURL string) ([]byte, error) {
 
 /* Types */
 
+// USPS is the client returned from Init
 type USPS struct {
 	Username   string
 	Password   string
