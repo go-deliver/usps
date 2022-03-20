@@ -1,11 +1,12 @@
 package api
 
 import (
-	"github.com/p-lau/usps/pkg/request"
-	"github.com/p-lau/usps/pkg/response"
+	"github.com/p-lau/usps/request"
+	"github.com/p-lau/usps/response"
 )
 
 /*
+
 ServiceDeliveryCalculatorGetLocations is a USPS API
 
 Allows customers to get estimates on delivery standards between 3 or 5 digit
@@ -22,11 +23,7 @@ the API response may change.
 func (api *API) ServiceDeliveryCalculatorGetLocations(request *request.SDCGetLocationsRequest) (response.SDCGetLocationsResponse, error) {
 	request.USERID = api.Username
 
-	// Initilize result
 	result := new(response.SDCGetLocationsResponse)
-
-	// Perform API call to USPS through the Client interace
-	err := api.do(request, result)
-
+	err := do(request, result)
 	return *result, err
 }

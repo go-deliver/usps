@@ -1,7 +1,7 @@
 package usps
 
 import (
-	"github.com/p-lau/usps/pkg/api"
+	"github.com/p-lau/usps/api"
 )
 
 // Init starts up the USPS client and returns a pointer for the client

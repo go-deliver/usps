@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/p-lau/usps"
-	"github.com/p-lau/usps/pkg/request"
+	"github.com/p-lau/usps/request"
 )
 
 func Test(t *testing.T) {
@@ -14,7 +14,6 @@ func Test(t *testing.T) {
 		userID = os.Getenv("USERID")
 		password = os.Getenv("PASS")
 	)
-
 	usps := usps.Init(userID, password)
 
 	req := request.SDCGetLocationsRequest{
@@ -31,6 +30,6 @@ func Test(t *testing.T) {
 	if err != nil{
 		t.Fatal(err)
 	}
-
+	
 	t.Log(string(marshaled))
 }

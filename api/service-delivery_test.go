@@ -5,21 +5,19 @@ import (
 	"os"
 	"testing"
 
-	"github.com/p-lau/usps/pkg/request"
+	"github.com/p-lau/usps/request"
 )
 
-func TestRequest (t *testing.T){
+func TestResponse(t *testing.T) {
 	var userID = os.Getenv("USERID")
 
-	api := API{
-		Username: userID,
-	}
+	api := API{Username: userID}
 
 	request := request.SDCGetLocationsRequest{
-		USERID: userID,
-		MailClass: "0",
-		OriginZIP: "00777",
-		DestinationZIP: "01337",
+		USERID:         userID,
+		MailClass:      "0",
+		OriginZIP:      "01852",
+		DestinationZIP: "90011",
 	}
 
 	resp, err := api.ServiceDeliveryCalculatorGetLocations(&request)
