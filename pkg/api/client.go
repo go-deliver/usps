@@ -6,6 +6,6 @@ import (
 
 // Client is the interface that calls the USPS API
 type Client interface {
-	Do(request request.Request, result interface{}) error
-	Call(requestURL string) ([]byte, error)
+	do(request request.Request, result interface{}) error
+	call(requestURL string) ([]byte, error)
 }

@@ -10,9 +10,9 @@ import (
 )
 
 const (
-	// DevHTTP is the base API endpoint for development environment
+	// development is the base API endpoint for development environment
 	development string = "https://stg-secure.shippingapis.com/ShippingAPI.dll?API="
-	// ProdHTTP is the base API endpoint for production environment
+	// production is the base API endpoint for production environment
 	production string = "https://secure.shippingapis.com/ShippingAPI.dll?API="
 )
 
@@ -23,13 +23,13 @@ type API struct {
 	Production bool `default:"false"`
 }
 
-func (c *API) Do(req request.Request, res interface{}) error {
+func (c *API) do(req request.Request, res interface{}) error {
 	reqStr, err := req.ToHTTP(c.Production)
 	if err != nil {
 		return err
 	}
 
-	body, err := c.Call(reqStr)
+	body, err := c.call(reqStr)
 	if err != nil {
 		return err
 	}
@@ -37,10 +37,10 @@ func (c *API) Do(req request.Request, res interface{}) error {
 		return errors.New("request error")
 	}
 
-	return parse.ParseXML(body, res)
+	return parse.ToXML(body, res)
 }
 
-func (c *API) Call(requestURL string) ([]byte, error) {
+func (c *API) call(requestURL string) ([]byte, error) {
 	var currentURL string
 	if c.Production {
 		currentURL = development

@@ -45,11 +45,6 @@ type ExpeditedLocation struct {
 	IsGuaranteed string `xml:"IsGuaranteed,omitempty"`
 }
 
-type TransMsg struct {
-	MsgCode string `xml:"MsgCode,omitempty"`
-	Msg     string `xml:"Msg,omitempty"`
-}
-
 type NonExpedited struct {
 	MailClass                  string   `xml:"MailClass,omitempty"`
 	NonExpeditedDestType       string   `xml:"NonExpeditedDestType,omitempty"`
@@ -82,4 +77,9 @@ type NonExpedited struct {
 	NoHFPULocInd               string   `xml:"HFPU>HFPUGlobalExcept>NoHFPULocInd,omitempty"`
 	NonExpeditedWTMsg          []string `xml:"HFPU>HFPUGlobalExcept>NonExpeditedWTMsg,omitempty"`
 	GlobalNonExpeditedTransMsg TransMsg `xml:"HFPU>HFPUGlobalExcept>NonExpeditedTransMsg,omitempty"`
+}
+
+type TransMsg struct {
+	MsgCode string `xml:"MsgCode,omitempty"`
+	Msg     string `xml:"Msg,omitempty"`
 }

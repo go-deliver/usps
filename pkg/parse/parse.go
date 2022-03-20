@@ -4,11 +4,11 @@ import (
 	"encoding/xml"
 	"strings"
 
-	response "github.com/p-lau/usps/pkg/response"
+	"github.com/p-lau/usps/pkg/response"
 )
 
 // parseXML is a utility function to USPS XML responses to structs
-func ParseXML(xmlBytes []byte, s interface{}) error {
+func ToXML(xmlBytes []byte, s interface{}) error {
 	// Ignores generic xml headers once
 	body := strings.Replace(string(xmlBytes), xml.Header, "", 1)
 

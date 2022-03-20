@@ -26,7 +26,7 @@ func (api *API) ServiceDeliveryCalculatorGetLocations(request *request.SDCGetLoc
 	result := new(response.SDCGetLocationsResponse)
 
 	// Perform API call to USPS through the Client interace
-	err := api.Do(request, result)
+	err := api.do(request, result)
 
 	return *result, err
 }

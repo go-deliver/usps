@@ -1,4 +1,5 @@
-.private
-.devcontainer
+// Ignore devcontainer.env file
+devcontainer.env
 
+// Use env.go to init() environment variables
 env.go
