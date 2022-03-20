@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/p-lau/usps/pkg/request"
+	"github.com/p-lau/usps/request"
 )
 
 func TestResponse(t *testing.T) {
@@ -15,9 +15,9 @@ func TestResponse(t *testing.T) {
 
 	request := request.SDCGetLocationsRequest{
 		USERID:         userID,
-		MailClass:      "6",
-		OriginZIP:      "00777",
-		DestinationZIP: "01337",
+		MailClass:      "0",
+		OriginZIP:      "01852",
+		DestinationZIP: "90011",
 	}
 
 	resp, err := api.ServiceDeliveryCalculatorGetLocations(&request)

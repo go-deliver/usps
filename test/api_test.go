@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/p-lau/usps"
-	"github.com/p-lau/usps/pkg/request"
+	"github.com/p-lau/usps/request"
 )
 
 func Test(t *testing.T) {
@@ -23,7 +23,7 @@ func Test(t *testing.T) {
 		DestinationZIP: "01852",
 	}
 
-	res, err := usps.ServiceDeliveryCalculatorGetLocations(&req)
+	res, err := usps.(&req)
 	if err != nil{
 		t.Fatal(err)
 	}

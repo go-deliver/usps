@@ -6,13 +6,13 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/p-lau/usps/pkg/request"
-	"github.com/p-lau/usps/pkg/response"
+	"github.com/p-lau/usps/request"
+	"github.com/p-lau/usps/response"
 )
 
 const url string = "https://secure.shippingapis.com/ShippingAPI.dll?API="
 
-// API is the main struct for USPS API Interface
+// API is the main API Interface
 type API struct {
 	Username string
 	Password string
