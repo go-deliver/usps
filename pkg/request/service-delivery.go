@@ -1,6 +1,6 @@
 package request
 
-func (r *SDCGetLocationsRequest) ToHTTP(bool) (string, error) {
+func (r *SDCGetLocationsRequest) ToHTTP() (string, error) {
 	return createRequest("SDCGetLocations", r)
 }
 

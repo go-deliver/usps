@@ -13,10 +13,9 @@ func Test(t *testing.T) {
 	var (
 		userID = os.Getenv("USERID")
 		password = os.Getenv("PASS")
-		production = false
 	)
 
-	usps := usps.Init(userID, password, production)
+	usps := usps.Init(userID, password)
 
 	req := request.SDCGetLocationsRequest{
 		MailClass: "0",

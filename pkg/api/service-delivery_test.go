@@ -13,7 +13,6 @@ func TestRequest (t *testing.T){
 
 	api := API{
 		Username: userID,
-		Production: false,
 	}
 
 	request := request.SDCGetLocationsRequest{

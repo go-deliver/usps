@@ -7,24 +7,20 @@ import (
 
 	"github.com/p-lau/usps/pkg/parse"
 	"github.com/p-lau/usps/pkg/request"
+	"github.com/p-lau/usps/pkg/response"
 )
 
-const (
-	// development is the base API endpoint for development environment
-	development string = "https://stg-secure.shippingapis.com/ShippingAPI.dll?API="
-	// production is the base API endpoint for production environment
-	production string = "https://secure.shippingapis.com/ShippingAPI.dll?API="
-)
+// url is the base endpoint for the USPS API
+const url string = "https://secure.shippingapis.com/ShippingAPI.dll?API="
 
 // API is the the base struct for USPS API Interface
 type API struct {
 	Username   string
 	Password   string
-	Production bool `default:"false"`
 }
 
-func (c *API) do(req request.Request, res interface{}) error {
-	reqStr, err := req.ToHTTP(c.Production)
+func (c *API) do(req request.Request, res response.Response) error {
+	reqStr, err := req.ToHTTP()
 	if err != nil {
 		return err
 	}
@@ -37,16 +33,11 @@ func (c *API) do(req request.Request, res interface{}) error {
 		return errors.New("request error")
 	}
 
-	return parse.ToXML(body, res)
+	return parse.XML(body, res)
 }
 
 func (c *API) call(requestURL string) ([]byte, error) {
-	var currentURL string
-	if c.Production {
-		currentURL = development
-	} else {
-		currentURL = production
-	}
+	var currentURL string = url
 	currentURL += requestURL
 
 	resp, err := http.DefaultClient.Get(currentURL)

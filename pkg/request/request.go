@@ -6,10 +6,10 @@ import (
 	"net/url"
 )
 
-// Request is the interface that utilizes toHTTP method to create a request body
+// Request interface utilizes ToHTTP method to create a request body
 type Request interface {
 	// ToHTTP is the request method to transcribe
-	ToHTTP(isProduction bool) (string, error)
+	ToHTTP() (string, error)
 }
 
 func createRequest(api string, r interface{}) (string, error) {
@@ -17,9 +17,7 @@ func createRequest(api string, r interface{}) (string, error) {
 	if err != nil {
 		return "", err
 	}
-
 	var requestURL bytes.Buffer
 	requestURL.WriteString(api + "&XML=" + url.QueryEscape(string(xmlOut)))
-
 	return requestURL.String(), nil
 }

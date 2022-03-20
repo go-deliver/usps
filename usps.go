@@ -5,10 +5,9 @@ import (
 )
 
 // Init starts up the USPS client and returns a pointer for the client
-func Init(username, password string, production bool) *api.API {
+func Init(username, password string) *api.API {
 	return &api.API{
 		Username: username,
 		Password: password,
-		Production: production,
 	}
 }
