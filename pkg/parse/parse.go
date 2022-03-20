@@ -12,7 +12,7 @@ func ParseXML(xmlBytes []byte, s interface{}) error {
 	// Ignores generic xml headers once
 	body := strings.Replace(string(xmlBytes), xml.Header, "", 1)
 
-	// Check to see if USPS returns an xml Error (Not an error in Go)
+	// Check to see if USPS returns an xml Error
 	xmlError := new(response.Error)
 	err := xml.Unmarshal([]byte(body), &xmlError)
 	if err != nil {

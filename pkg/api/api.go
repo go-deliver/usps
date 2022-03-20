@@ -11,9 +11,9 @@ import (
 
 const (
 	// DevHTTP is the base API endpoint for development environment
-	DevHTTP  string = "https://stg-secure.shippingapis.com/ShippingAPI.dll?API="
+	development string = "https://stg-secure.shippingapis.com/ShippingAPI.dll?API="
 	// ProdHTTP is the base API endpoint for production environment
-	ProdHTTP string = "https://secure.shippingapis.com/ShippingAPI.dll?API="
+	production string = "https://secure.shippingapis.com/ShippingAPI.dll?API="
 )
 
 // API is the the base struct for USPS API Interface
@@ -41,11 +41,11 @@ func (c *API) Do(req request.Request, res interface{}) error {
 }
 
 func (c *API) Call(requestURL string) ([]byte, error) {
-	currentURL := ""
+	var currentURL string
 	if c.Production {
-		currentURL += ProdHTTP
+		currentURL = development
 	} else {
-		currentURL += DevHTTP
+		currentURL = production
 	}
 	currentURL += requestURL
 
