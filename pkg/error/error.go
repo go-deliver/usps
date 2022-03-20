@@ -1,4 +1,4 @@
-package usps
+package error
 
 // Error is returned from USPS API
 type Error struct {

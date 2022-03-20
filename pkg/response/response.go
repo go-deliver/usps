@@ -1,52 +1,16 @@
-package usps
+package response
 
-import "encoding/xml"
-
-/*
-ServiceDeliveryCalculatorGetLocations is a USPS API
-
-Allows customers to get estimates on delivery standards between 3 or 5 digit
-Zip Codes for Priority Mail Express, Priority Mail, First Class Mail,
-Marketing Mail, Periodicals, and Package Services.
-
-The data returned by the API is intended
-for display only. The content or sequence of the string data returned in
-the API response may change.
-
-	Source: https://www.usps.com/business/web-tools-apis/service-delivery-calculator-get-locations-api.htm
-
-*/
-func (usps *USPS) ServiceDeliveryCalculatorGetLocations(request *SDCGetLocationsRequest) (SDCGetLocationsResponse, error) {
-	request.USERID = usps.Username
-
-	// Initilize result
-	result := new(SDCGetLocationsResponse)
-
-	// Perform API call to USPS through the Client interace
-	err := usps.Client.do(request, result)
-
-	return *result, err
+// Error is returned from USPS API
+type Error struct {
+	Number      string `xml:"Number"`
+	Description string `xml:"Description,omitempty"`
+	Source      string `xml:"Source,omitempty"`
+	HelpFile    string `xml:"HelpFile,omitempty"`
+	HelpContext string `xml:"HelpContext,omitempty"`
 }
 
-func (r *SDCGetLocationsRequest) toHTTP(bool) (string, error) {
-	return createRequest("SDCGetLocations", r)
-}
-
-/* Types */
-
-// SDCGetLocationsRequest is the request sent to the USPS ServiceDeliveryGetLocations API
-type SDCGetLocationsRequest struct {
-	XMLName         xml.Name `xml:"SDCGetLocationsRequest"`
-	USERID          string   `xml:"USERID,attr"`
-	MailClass       string   `xml:"MailClass"`
-	OriginZIP       string   `xml:"OriginZIP"`
-	DestinationZIP  string   `xml:"DestinationZIP"`
-	AcceptDate      string   `xml:"AcceptDate,omitempty"`
-	AcceptTime      string   `xml:"AcceptTime,omitempty"`
-	NonEMDetail     string   `xml:"NonEMDetail,omitempty"`
-	NonEMOriginType string   `xml:"NonEMOriginType,omitempty"`
-	NonEMDestType   string   `xml:"NonEMDestType,omitempty"`
-	Weight          string   `xml:"Weight,omitempty"`
+func (e *Error) Error() string {
+	return e.Description
 }
 
 // SDCGetLocationsResponse is the expected response returned when sending SDCGetLocations request to USPS
