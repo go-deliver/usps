@@ -28,6 +28,9 @@ func Test(t *testing.T) {
 		t.Fatal(err)
 	}
 	marshaled, err := xml.MarshalIndent(res, "", " ")
+	if err != nil{
+		t.Fatal(err)
+	}
 
 	t.Log(string(marshaled))
 }
