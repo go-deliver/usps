@@ -1,4 +1,4 @@
-package usps
+package response
 
 // Error is returned from USPS API
 type Error struct {
@@ -12,12 +12,3 @@ type Error struct {
 func (e *Error) Error() string {
 	return e.Description
 }
-
-// Example:
-/*
-<Error>
-	<Number>80040B19</Number>
-	<Description>XML Syntax Error: Please check the XML request to see if it can be parsed.</Description>
-	<Source>USPSCOM::DoAuth</Source>
-</Error>
-*/
