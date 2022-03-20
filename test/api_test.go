@@ -14,7 +14,6 @@ func Test(t *testing.T) {
 		userID = os.Getenv("USERID")
 		password = os.Getenv("PASS")
 	)
-
 	usps := usps.Init(userID, password)
 
 	req := request.SDCGetLocationsRequest{
@@ -23,7 +22,7 @@ func Test(t *testing.T) {
 		DestinationZIP: "01852",
 	}
 
-	res, err := usps.(&req)
+	res, err := usps.ServiceDeliveryCalculatorGetLocations(&req)
 	if err != nil{
 		t.Fatal(err)
 	}
@@ -31,6 +30,6 @@ func Test(t *testing.T) {
 	if err != nil{
 		t.Fatal(err)
 	}
-
+	
 	t.Log(string(marshaled))
 }
