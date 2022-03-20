@@ -44,4 +44,4 @@ jobs:
       run: go vet ./...
     # Run testing on the code
     - name: Run testing
-      run: go test ./pkg... -v
+      run: go test ./... -v
