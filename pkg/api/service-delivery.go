@@ -21,12 +21,8 @@ the API response may change.
 */
 func (api *API) ServiceDeliveryCalculatorGetLocations(request *request.SDCGetLocationsRequest) (response.SDCGetLocationsResponse, error) {
 	request.USERID = api.Username
-
-	// Initilize result
+	
 	result := new(response.SDCGetLocationsResponse)
-
-	// Perform API call to USPS through the Client interace
-	err := api.do(request, result)
-
+	err := do(request, result)
 	return *result, err
 }

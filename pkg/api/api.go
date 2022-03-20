@@ -1,31 +1,30 @@
 package api
 
 import (
+	"encoding/xml"
 	"errors"
 	"io"
 	"net/http"
 
-	"github.com/p-lau/usps/pkg/parse"
 	"github.com/p-lau/usps/pkg/request"
 	"github.com/p-lau/usps/pkg/response"
 )
 
-// url is the base endpoint for the USPS API
 const url string = "https://secure.shippingapis.com/ShippingAPI.dll?API="
 
-// API is the the base struct for USPS API Interface
+// API is the main struct for USPS API Interface
 type API struct {
-	Username   string
-	Password   string
+	Username string
+	Password string
 }
 
-func (c *API) do(req request.Request, res response.Response) error {
+func do(req request.Request, res response.Response) error {
 	reqStr, err := req.ToHTTP()
 	if err != nil {
 		return err
 	}
 
-	body, err := c.call(reqStr)
+	body, err := call(reqStr)
 	if err != nil {
 		return err
 	}
@@ -33,14 +32,24 @@ func (c *API) do(req request.Request, res response.Response) error {
 		return errors.New("request error")
 	}
 
-	return parse.XML(body, res)
+	// Check to see if USPS returns an xml Error
+	xmlError := new(response.Error)
+	err = xml.Unmarshal(body, &xmlError)
+
+	if err != nil {
+		return err
+	}
+
+	if xmlError != nil && xmlError.Number != "" {
+		return xmlError
+	}
+
+	// Proceed to unmarshal the body
+	return xml.Unmarshal([]byte(body), res)
 }
 
-func (c *API) call(requestURL string) ([]byte, error) {
-	var currentURL string = url
-	currentURL += requestURL
-
-	resp, err := http.DefaultClient.Get(currentURL)
+func call(req string) ([]byte, error) {
+	resp, err := http.DefaultClient.Get(url + req)
 	if err != nil {
 		return nil, err
 	}

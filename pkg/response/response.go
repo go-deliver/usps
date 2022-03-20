@@ -1,5 +1,3 @@
 package response
 
-type Response interface {
-	
-}
+type Response interface{}

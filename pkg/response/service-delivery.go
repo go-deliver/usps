@@ -51,10 +51,15 @@ type nonExpedited struct {
 	EAD                  string `xml:"EAD,omitempty"`
 	SvcStdDays           string `xml:"SvcStdDays,omitempty"`
 	SchedDlvryDate       string `xml:"SchedDlvryDate,omitempty"`
-	HPFU                 *hpfu  `xml:"HPFU,omitempty"`
+	HFPU                 *hfpu  `xml:"HFPU,omitempty"`
+	NonExpeditedExceptions *nonExpeditedExceptions `xml:"NonExpeditedExceptions,omitempty"`
 }
 
-type hpfu struct {
+type nonExpeditedExceptions struct {
+	NonExpeditedTransMsg *transMsg `xml:"NonExpeditedTransMsg,omitempty"`
+}
+
+type hfpu struct {
 	EAD             string           `xml:"EAD,omitempty"`
 	COT             string           `xml:"COT,omitempty"`
 	ServiceStandard *serviceStandard `xml:"ServiceStandard,omitempty"`
