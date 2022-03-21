@@ -4,9 +4,9 @@ import "github.com/p-lau/usps/types"
 
 /*
 
-SDCGetLocations is a USPS API
+SDCGetLocations is a USPS API that gets estimates on delivery standards.
 
-Allows customers to get estimates on delivery standards between 3 or 5 digit
+Allows between 3 or 5 digit
 Zip Codes for Priority Mail Express, Priority Mail, First Class Mail,
 Marketing Mail, Periodicals, and Package Services.
 

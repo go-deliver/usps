@@ -9,6 +9,10 @@ import (
 // Request interface uses ToHTTP method to create a request string
 type Request interface {
 	// ToHTTP is the method to convert the Request to XML string
+	/*
+	func (r *Request) ToHTTP() (string, error) {
+	return createRequest("API", r)}
+	*/
 	ToHTTP() (string, error)
 }
 

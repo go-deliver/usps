@@ -4,7 +4,7 @@ import "github.com/p-lau/usps/types"
 
 /*
 
-Verify is a USPS API
+Verify is a USPS API that verifies street addresses.
 
 Corrects errors in street addresses, including abbreviations and
 missing information, and supplies ZIP Codes and ZIP Codes + 4.
