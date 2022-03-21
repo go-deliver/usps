@@ -6,8 +6,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/p-lau/usps/request"
-	"github.com/p-lau/usps/response"
+	"github.com/p-lau/usps/types"
 )
 
 const url string = "https://secure.shippingapis.com/ShippingAPI.dll?API="
@@ -18,7 +17,7 @@ type API struct {
 	Password string
 }
 
-func do(req request.Request, res response.Response) error {
+func do(req types.Request, res types.Response) error {
 	reqStr, err := req.ToHTTP()
 	if err != nil {
 		return err
@@ -33,7 +32,7 @@ func do(req request.Request, res response.Response) error {
 	}
 
 	// Check to see if USPS returns an xml Error
-	xmlError := new(response.Error)
+	xmlError := new(types.Error)
 	err = xml.Unmarshal(body, &xmlError)
 
 	if err != nil {

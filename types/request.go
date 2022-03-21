@@ -1,4 +1,4 @@
-package request
+package types
 
 import (
 	"bytes"
@@ -6,9 +6,9 @@ import (
 	"net/url"
 )
 
-// Request interface utilizes ToHTTP method to create a request body
+// Request interface uses ToHTTP method to create a request string
 type Request interface {
-	// ToHTTP is the request method to transcribe
+	// ToHTTP is the method to convert the Request to XML string
 	ToHTTP() (string, error)
 }
 

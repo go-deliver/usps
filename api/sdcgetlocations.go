@@ -1,9 +1,6 @@
 package api
 
-import (
-	"github.com/p-lau/usps/request"
-	"github.com/p-lau/usps/response"
-)
+import "github.com/p-lau/usps/types"
 
 /*
 
@@ -14,15 +11,15 @@ Zip Codes for Priority Mail Express, Priority Mail, First Class Mail,
 Marketing Mail, Periodicals, and Package Services.
 
 Returns response.SDCGetLocationsResponse
-Returns errors with xml marshalling/unmarshalling and 
+Can return errors from xml marshalling/unmarshalling and errors from USPS
 
-	Source: https://www.usps.com/business/web-tools-apis/service-delivery-calculator-get-locations-api.htm
+Source: https://www.usps.com/business/web-tools-apis/service-delivery-calculator-get-locations-api.htm
 
 */
-func (api *API) SDCGetLocations(request *request.SDCGetLocationsRequest) (response.SDCGetLocationsResponse, error) {
+func (api *API) SDCGetLocations(request *types.SDCGetLocationsRequest) (types.SDCGetLocationsResponse, error) {
 	request.USERID = api.Username
 
-	result := new(response.SDCGetLocationsResponse)
+	result := new(types.SDCGetLocationsResponse)
 	err := do(request, result)
 	return *result, err
 }

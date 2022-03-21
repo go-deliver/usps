@@ -1,4 +1,4 @@
-package response
+package types
 
 // Error is the response returned from USPS API when there is an issue
 // with the request or other reasons.
