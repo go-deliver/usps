@@ -20,7 +20,7 @@ func TestResponse(t *testing.T) {
 		DestinationZIP: "90011",
 	}
 
-	resp, err := api.ServiceDeliveryCalculatorGetLocations(&request)
+	resp, err := api.SDCGetLocations(&request)
 	if err != nil {
 		t.Fatal(err)
 	}

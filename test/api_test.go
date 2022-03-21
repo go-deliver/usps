@@ -22,7 +22,7 @@ func Test(t *testing.T) {
 		DestinationZIP: "01852",
 	}
 
-	res, err := usps.ServiceDeliveryCalculatorGetLocations(&req)
+	res, err := usps.SDCGetLocations(&req)
 	if err != nil{
 		t.Fatal(err)
 	}
@@ -30,6 +30,6 @@ func Test(t *testing.T) {
 	if err != nil{
 		t.Fatal(err)
 	}
-	
+
 	t.Log(string(marshaled))
 }
