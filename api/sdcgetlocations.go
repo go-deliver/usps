@@ -18,7 +18,7 @@ Source: https://www.usps.com/business/web-tools-apis/service-delivery-calculator
 */
 func (api *API) SDCGetLocations(request *types.SDCGetLocationsRequest) (types.SDCGetLocationsResponse, error) {
 	request.USERID = api.Username
-
+	
 	result := new(types.SDCGetLocationsResponse)
 	err := do(request, result)
 	return *result, err

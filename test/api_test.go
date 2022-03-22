@@ -35,7 +35,7 @@ func TestSDCGETLocationsAPI(t *testing.T) {
 }
 
 func TestVerifyAPI(t *testing.T){
-	address := types.Address{
+	address := types.AddressRequest{
 		ID: "TestAddress",
 		Address1: "SUITE K",
 		Address2: "29851 Aventura",
@@ -43,7 +43,7 @@ func TestVerifyAPI(t *testing.T){
 		State: "CA",
 	}
 
-	address2 := types.Address{
+	address2 := types.AddressRequest{
 		ID: "ERROR",
 		Address2: "BAD ADDRESS",
 		City: "CAMBRIDGE",
@@ -52,7 +52,7 @@ func TestVerifyAPI(t *testing.T){
 
 	req := types.AddressValidateRequest{
 		Revision: "1",
-		Address: []*types.Address{&address, &address2},
+		Address: []*types.AddressRequest{&address, &address2},
 	}
 
 	res, err := api.Verify(&req)

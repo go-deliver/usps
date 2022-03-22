@@ -3,7 +3,7 @@ package types
 // These are shared between ZipCodeLookUp and Verify
 
 type AddressRequest struct {
-	ID           string `xml:"ID,attr"`                // ID for the individual address lookup
+	ID           string `xml:"ID,attr,omitempty"`                // ID for the individual address lookup
 	FirmName     string `xml:"FirmName,omitempty"`     // Firm Name
 	Address1     string `xml:"Address1"`               // Delivery Address in the destination address
 	Address2     string `xml:"Address2"`               // Delivery Address in the destination address. Required for all mail and packages, however 11-digit Destination Delivery Point ZIP+4 Code can be provided as an alternative in the Detail 1 Record
@@ -15,16 +15,8 @@ type AddressRequest struct {
 }
 
 type AddressResponse struct {
-	Text                 string `xml:",chardata"`
-	ID                   string `xml:"ID,attr,omitempty"`
-	Address1             string `xml:"Address1,omitempty"`
-	Address2             string `xml:"Address2"`
-	City                 string `xml:"City"`
+	*AddressRequest
 	CityAbbreviation     string `xml:"CityAbbreviation,omitempty"`
-	State                string `xml:"State"`
-	Zip5                 string `xml:"Zip5"`
-	Zip4                 string `xml:"Zip4"`
-	Urbanization         string `xml:"Urbanization,omitempty"`
 	DeliveryPoint        string `xml:"DeliveryPoint,omitempty"`
 	CarrierRoute         string `xml:"CarrierRoute,omitempty"`
 	Footnotes            string `xml:"Footnotes,omitempty"`

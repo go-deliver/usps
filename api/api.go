@@ -17,47 +17,36 @@ type API struct {
 	Password string
 }
 
-func do(req types.Request, res types.Response) error {
+func do(req types.IRequest, res types.IResponse) error {
+	
+
 	reqStr, err := req.ToHTTP()
 	if err != nil {
 		return err
 	}
 
-	body, err := call(reqStr)
-	if err != nil {
-		return err
-	}
-	if body == nil {
-		return errors.New("request error")
-	}
+	if resp, err := http.DefaultClient.Get(url + reqStr); err == nil {
+		defer resp.Body.Close()
 
-	// Check to see if USPS returns an xml Error
-	xmlError := new(types.Error)
-	err = xml.Unmarshal(body, &xmlError)
+		if body, err := io.ReadAll(resp.Body); err == nil {
+			if body == nil {
+				return errors.New("request error")
+			}
 
-	if err != nil {
-		return err
-	}
+			// Check to see if USPS returns an xml Error
+			xmlError := new(types.Error)
+			if err = xml.Unmarshal(body, &xmlError); err != nil {
+				return err
+			}
+			if xmlError != nil && xmlError.Number != "" {
+				return xmlError
+			}
 
-	if xmlError != nil && xmlError.Number != "" {
-		return xmlError
-	}
+			// Proceed to unmarshal the body
+			return xml.Unmarshal([]byte(body), res)
 
-	// Proceed to unmarshal the body
-	return xml.Unmarshal([]byte(body), res)
-}
-
-func call(req string) ([]byte, error) {
-	resp, err := http.DefaultClient.Get(url + req)
-	if err != nil {
-		return nil, err
+		}
 	}
 
-	defer resp.Body.Close()
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-
-	return body, nil
+	return err
 }
