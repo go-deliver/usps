@@ -18,10 +18,7 @@ Source:
 https://www.usps.com/business/web-tools-apis/hold-for-pickup-facilities-lookup-api.htm
 
 */
-func (api *API) HFPFacilityInfo(request *types.HFPFacilityInfoRequest) (types.HFPFacilityInfoResponse, error) {
+func (api *API) HFPFacilityInfo(request *types.HFPFacilityInfoRequest) (response *types.HFPFacilityInfoResponse, err error) {
 	request.USERID = api.Username
-
-	result := new(types.HFPFacilityInfoResponse)
-	err := do(request, result)
-	return *result, err
+	return response, do(request, response)
 }

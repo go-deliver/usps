@@ -18,10 +18,8 @@ Can return errors from xml marshalling/unmarshalling and errors from USPS
 Source: https://www.usps.com/business/web-tools-apis/address-information-api.htm
 
 */
-func (api *API) Verify(request *types.AddressValidateRequest) (types.AddressValidateResponse, error) {
+func (api *API) Verify(request *types.AddressValidateRequest) (response *types.AddressValidateResponse, err error) {
 	request.USERID = api.Username
-
-	result := new(types.AddressValidateResponse)
-	err := do(request, result)
-	return *result, err
+	err = do(request, response)
+	return
 }

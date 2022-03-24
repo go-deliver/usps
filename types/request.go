@@ -11,7 +11,7 @@ type IRequest interface {
 	// ToHTTP is the method to convert the Request to XML string
 	/*
 		func (r *Request) ToHTTP() (string, error) {
-			return createRequest("API", r)
+			return createRequest(API_NAME, r)
 		}
 	*/
 	ToHTTP() (string, error)

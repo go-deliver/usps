@@ -1,10 +1,11 @@
 package types
 
 func (r *HFPFacilityInfoRequest) ToHTTP() (string, error) {
-	return createRequest("HFPFacilityInfo", r)}
+	return createRequest("HFPFacilityInfo", r)
+}
 
 type HFPFacilityInfoRequest struct {
-	*Request
+	Request
 	PickupCity  string `xml:"PickupCity"`
 	PickupState string `xml:"PickupState"`
 	PickupZIP   string `xml:"PickupZIP"`
@@ -14,8 +15,8 @@ type HFPFacilityInfoRequest struct {
 
 type HFPFacilityInfoResponse struct {
 	*HFPFacilityInfoRequest
-	USERID string `xml:"-"`
-	Facility    []*Facility
+	USERID     string `xml:"-"`
+	Facility   []*Facility
 	LogMessage string `xml:"LogMessage,omitempty"`
 }
 

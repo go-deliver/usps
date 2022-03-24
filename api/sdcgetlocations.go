@@ -16,10 +16,8 @@ Can return errors from xml marshalling/unmarshalling and errors from USPS
 Source: https://www.usps.com/business/web-tools-apis/service-delivery-calculator-get-locations-api.htm
 
 */
-func (api *API) SDCGetLocations(request *types.SDCGetLocationsRequest) (types.SDCGetLocationsResponse, error) {
+func (api *API) SDCGetLocations(request *types.SDCGetLocationsRequest) (response *types.SDCGetLocationsResponse, err error) {
 	request.USERID = api.Username
-	
-	result := new(types.SDCGetLocationsResponse)
-	err := do(request, result)
-	return *result, err
+	err = do(request, response)
+	return
 }

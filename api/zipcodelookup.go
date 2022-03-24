@@ -14,10 +14,8 @@ Can return errors from xml marshalling/unmarshalling and errors from USPS
 Source: https://www.usps.com/business/web-tools-apis/address-information-api.htm
 
 */
-func (api *API) ZipCodeLookup(request *types.ZipCodeLookupRequest) (types.ZipCodeLookupResponse, error) {
+func (api *API) ZipCodeLookup(request *types.ZipCodeLookupRequest) (response *types.ZipCodeLookupResponse, err error) {
 	request.USERID = api.Username
-
-	result := new(types.ZipCodeLookupResponse)
-	err := do(request, result)
-	return *result, err
+	err = do(request, response)
+	return
 }

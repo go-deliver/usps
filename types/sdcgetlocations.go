@@ -103,9 +103,9 @@ type SDCGetLocationsResponse struct {
 }
 
 type Expedited struct {
-	EAD               string                `xml:"EAD,omitempty"`               // Effective Acceptance Date
+	EAD               string                 `xml:"EAD,omitempty"`               // Effective Acceptance Date
 	Commitment        []*ExpeditedCommitment `xml:"Commitment,omitempty"`        // Priority Mail Express and Priority Mail commitment information
-	ExpeditedMessage  string                `xml:"ExpeditedMessage,omitempty"`  // Expedited messaging
+	ExpeditedMessage  string                 `xml:"ExpeditedMessage,omitempty"`  // Expedited messaging
 	ExpeditedTransMsg []*TransMsg            `xml:"ExpeditedTransMsg,omitempty"` // Expedited transportational messaging
 }
 
@@ -172,27 +172,27 @@ type NonExpedited struct {
 	EAD                    string                  `xml:"EAD,omitempty"`                    // Effective Acceptance Date
 	SvcStdDays             string                  `xml:"SvcStdDays,omitempty"`             // Service Standard Days
 	SchedDlvryDate         string                  `xml:"SchedDlvryDate,omitempty"`         // Scheduled Delivery Date
-	HFPU                   *HFPU                    `xml:"HFPU,omitempty"`                   // Hold for Pickup information
+	HFPU                   *HFPU                   `xml:"HFPU,omitempty"`                   // Hold for Pickup information
 	NonExpeditedExceptions *NonExpeditedExceptions `xml:"NonExpeditedExceptions,omitempty"` // Nonexpedited Exception Elements
 }
 
 type NonExpeditedExceptions struct {
-	NonExpeditedMsg      string   `xml:"NonExpeditedMsg,omitempty"`      // Additional exception messaging
+	NonExpeditedMsg      string    `xml:"NonExpeditedMsg,omitempty"`      // Additional exception messaging
 	NonExpeditedTransMsg *TransMsg `xml:"NonExpeditedTransMsg,omitempty"` // Nonexpedited transportational messaging
 }
 
 type HFPU struct {
-	EAD             string          `xml:"EAD,omitempty"`              // Effective Acceptance Date
-	COT             string          `xml:"COT,omitempty"`              // Cut-off time
+	EAD             string           `xml:"EAD,omitempty"`              // Effective Acceptance Date
+	COT             string           `xml:"COT,omitempty"`              // Cut-off time
 	ServiceStandard *ServiceStandard `xml:"ServiceStandard,omitempty"`  // Hold for Pickup Service Standard Elements
 	GlobalExcept    *GlobalExcept    `xml:"HFPUGlobalExcept,omitempty"` // Hold for Pickup Exception Elements
 }
 
 type GlobalExcept struct {
-	PostCOT                    string   `xml:"PostCOT,omitempty"`              // Indicates if the mailpiece arrived after the Cut-Off Time
-	OverMaxResults             string   `xml:"OverMaxResults,omitempty"`       // Indicates if more than the number of returned Hold for Pickup locations was found
-	NoHFPULocInd               string   `xml:"NoHFPULocInd,omitempty"`         // Indicates if there were no locations found in the RAU that support Hold for Pickup
-	NonExpeditedWTMsg          []string `xml:"NonExpeditedWTMsg,omitempty"`    // Additional exception messaging
+	PostCOT                    string    `xml:"PostCOT,omitempty"`              // Indicates if the mailpiece arrived after the Cut-Off Time
+	OverMaxResults             string    `xml:"OverMaxResults,omitempty"`       // Indicates if more than the number of returned Hold for Pickup locations was found
+	NoHFPULocInd               string    `xml:"NoHFPULocInd,omitempty"`         // Indicates if there were no locations found in the RAU that support Hold for Pickup
+	NonExpeditedWTMsg          []string  `xml:"NonExpeditedWTMsg,omitempty"`    // Additional exception messaging
 	GlobalNonExpeditedTransMsg *TransMsg `xml:"NonExpeditedTransMsg,omitempty"` // Non-Expedited Mail transportation messaging
 }
 
