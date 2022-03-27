@@ -3,7 +3,6 @@ package api
 import "github.com/p-lau/usps/types"
 
 /*
-
 HFPFacilityInfo is a USPS API that will list US Postal Service Facilities where Hold-For-Pickup service is available.
 
 Hold For Pickup service is available at approximately 31,000 USPS locations.
@@ -16,9 +15,8 @@ Note: This API offers the ability to lookup Hold For Pickup Facilities, not crea
 
 Source:
 https://www.usps.com/business/web-tools-apis/hold-for-pickup-facilities-lookup-api.htm
-
 */
 func (api *API) HFPFacilityInfo(request *types.HFPFacilityInfoRequest) (response *types.HFPFacilityInfoResponse, err error) {
 	request.USERID = api.Username
-	return response, do(request, response)
+	return response, do(request, &response)
 }

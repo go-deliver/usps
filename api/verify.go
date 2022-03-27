@@ -3,7 +3,6 @@ package api
 import "github.com/p-lau/usps/types"
 
 /*
-
 Verify is a USPS API that verifies street addresses.
 
 Corrects errors in street addresses, including abbreviations and
@@ -20,6 +19,5 @@ Source: https://www.usps.com/business/web-tools-apis/address-information-api.htm
 */
 func (api *API) Verify(request *types.AddressValidateRequest) (response *types.AddressValidateResponse, err error) {
 	request.USERID = api.Username
-	err = do(request, response)
-	return
+	return response, do(request, &response)
 }
