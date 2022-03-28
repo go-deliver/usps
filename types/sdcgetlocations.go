@@ -1,4 +1,86 @@
-package response
+package types
+
+func (r *SDCGetLocationsRequest) ToHTTP() (string, error) {
+	return createRequest("SDCGetLocations", r)
+}
+
+// SDCGetLocationsRequest is the request sent to the USPS ServiceDeliveryGetLocations API
+type SDCGetLocationsRequest struct {
+	Request
+	/*
+		Defines mail class for commitment data.
+
+		Valid:
+
+		"0" = All Mail Classes
+
+		"1" = Priority Mail Express
+
+		"2" = Priority Mail
+
+		"3" = First Class Mail
+
+		"4" = Marketing Mail
+
+		"5" = Periodicals
+
+		"6" = Package Services
+	*/
+	MailClass string `xml:"MailClass"`
+	// The origin ZIP code. May be 3, 5, or 9 characters.
+	OriginZIP string `xml:"OriginZIP"`
+	// The destination Zip code. Must be a valid 5-character zip code.
+	DestinationZIP string `xml:"DestinationZIP"`
+	/*
+	 The date the package will be mailed.
+	 Acceptance date may be up to 30 days in advance.
+	 Defaults to system date.
+
+	 Format: YYYY-MM-DD
+
+	 Example: "2014-09-23"
+	*/
+	AcceptDate string `xml:"AcceptDate,omitempty"`
+	/*
+		Time package will be accepted at a postal facility.
+		Default value returned when no value is included in the request will be current time.
+
+		Format: HHMM
+
+		Example: "1600"
+	*/
+	AcceptTime string `xml:"AcceptTime,omitempty"`
+	/*
+		Returns additional detail for Non-Expedited mail classes when "True".
+		Default: "False"
+		Example:
+	*/
+	NonEMDetail string `xml:"NonEMDetail,omitempty"`
+	/*
+		Origin type indicator for non-Expedited shipments.
+
+		Valid:
+
+		"1" = Local Mail
+
+		"2" = Destination Entered Mail
+	*/
+	NonEMOriginType string `xml:"NonEMOriginType,omitempty"`
+	/*
+		Destination type indicator for non-Expedited shipments.
+
+		Valid:
+
+		"1" = PO-Addressee - Street
+
+		"2" = Destination - PO Box
+
+		"3" = Hold for pickup (HFPU)
+	*/
+	NonEMDestType string `xml:"NonEMDestType,omitempty"`
+	// Item weight
+	Weight string `xml:"Weight,omitempty"`
+}
 
 // SDCGetLocationsResponse is the expected response returned when sending SDCGetLocations request to USPS
 type SDCGetLocationsResponse struct {
@@ -16,18 +98,18 @@ type SDCGetLocationsResponse struct {
 	AcceptTime             string          `xml:"AcceptTime"`                       // Acceptance time at postal facility
 	Weight                 string          `xml:"Weight,omitempty"`                 // Weight from request
 	NonExpeditedOriginType string          `xml:"NonExpeditedOriginType,omitempty"` // Nonexpedited origin type from request
-	Expedited              *expedited      `xml:"Expedited,omitempty"`              // Groups Priority Mail Express Mail and Priority Mail Commitments and Effective Acceptance Dates
-	NonExpedited           []*nonExpedited `xml:"NonExpedited,omitempty"`           // Non-Expedited Mail Class elements
+	Expedited              *Expedited      `xml:"Expedited,omitempty"`              // Groups Priority Mail Express Mail and Priority Mail Commitments and Effective Acceptance Dates
+	NonExpedited           []*NonExpedited `xml:"NonExpedited,omitempty"`           // Non-Expedited Mail Class elements
 }
 
-type expedited struct {
+type Expedited struct {
 	EAD               string                 `xml:"EAD,omitempty"`               // Effective Acceptance Date
-	Commitment        []*expeditedCommitment `xml:"Commitment,omitempty"`        // Priority Mail Express and Priority Mail commitment information
+	Commitment        []*ExpeditedCommitment `xml:"Commitment,omitempty"`        // Priority Mail Express and Priority Mail commitment information
 	ExpeditedMessage  string                 `xml:"ExpeditedMessage,omitempty"`  // Expedited messaging
-	ExpeditedTransMsg []*transMsg            `xml:"ExpeditedTransMsg,omitempty"` // Expedited transportational messaging
+	ExpeditedTransMsg []*TransMsg            `xml:"ExpeditedTransMsg,omitempty"` // Expedited transportational messaging
 }
 
-type expeditedCommitment struct {
+type ExpeditedCommitment struct {
 	MailClass string `xml:"MailClass,omitempty"` // Mail Class
 	/*
 		Commitment Name.
@@ -47,11 +129,11 @@ type expeditedCommitment struct {
 
 		"A0218", "B0218" = 2-Day at 6:00 PM
 	*/
-	CommitmentSeq string               `xml:"CommitmentSeq,omitempty"`
-	Locations     []*expeditedLocation `xml:"Location,omitempty"` // Drop off location information
+	CommitmentSeq string              `xml:"CommitmentSeq,omitempty"`
+	Locations     []*ExpeditedLocation `xml:"Location,omitempty"` // Drop off location information
 }
 
-type expeditedLocation struct {
+type ExpeditedLocation struct {
 	SDD     string `xml:"SDD,omitempty"`     // Scheduled Delivery Date
 	COT     string `xml:"COT,omitempty"`     // Cut-off Time
 	FacType string `xml:"FacType,omitempty"` // Facility Type
@@ -73,7 +155,7 @@ type expeditedLocation struct {
 	IsGuaranteed string `xml:"IsGuaranteed,omitempty"`
 }
 
-type nonExpedited struct {
+type NonExpedited struct {
 	MailClass string `xml:"MailClass,omitempty"` // Mail Class
 	/*
 		Destination Type
@@ -90,37 +172,37 @@ type nonExpedited struct {
 	EAD                    string                  `xml:"EAD,omitempty"`                    // Effective Acceptance Date
 	SvcStdDays             string                  `xml:"SvcStdDays,omitempty"`             // Service Standard Days
 	SchedDlvryDate         string                  `xml:"SchedDlvryDate,omitempty"`         // Scheduled Delivery Date
-	HFPU                   *hfpu                   `xml:"HFPU,omitempty"`                   // Hold for Pickup information
-	NonExpeditedExceptions *nonExpeditedExceptions `xml:"NonExpeditedExceptions,omitempty"` // Nonexpedited Exception Elements
+	HFPU                   *HFPU                   `xml:"HFPU,omitempty"`                   // Hold for Pickup information
+	NonExpeditedExceptions *NonExpeditedExceptions `xml:"NonExpeditedExceptions,omitempty"` // Nonexpedited Exception Elements
 }
 
-type nonExpeditedExceptions struct {
+type NonExpeditedExceptions struct {
 	NonExpeditedMsg      string    `xml:"NonExpeditedMsg,omitempty"`      // Additional exception messaging
-	NonExpeditedTransMsg *transMsg `xml:"NonExpeditedTransMsg,omitempty"` // Nonexpedited transportational messaging
+	NonExpeditedTransMsg *TransMsg `xml:"NonExpeditedTransMsg,omitempty"` // Nonexpedited transportational messaging
 }
 
-type hfpu struct {
+type HFPU struct {
 	EAD             string           `xml:"EAD,omitempty"`              // Effective Acceptance Date
 	COT             string           `xml:"COT,omitempty"`              // Cut-off time
-	ServiceStandard *serviceStandard `xml:"ServiceStandard,omitempty"`  // Hold for Pickup Service Standard Elements
-	GlobalExcept    *globalExcept    `xml:"HFPUGlobalExcept,omitempty"` // Hold for Pickup Exception Elements
+	ServiceStandard *ServiceStandard `xml:"ServiceStandard,omitempty"`  // Hold for Pickup Service Standard Elements
+	GlobalExcept    *GlobalExcept    `xml:"HFPUGlobalExcept,omitempty"` // Hold for Pickup Exception Elements
 }
 
-type globalExcept struct {
+type GlobalExcept struct {
 	PostCOT                    string    `xml:"PostCOT,omitempty"`              // Indicates if the mailpiece arrived after the Cut-Off Time
 	OverMaxResults             string    `xml:"OverMaxResults,omitempty"`       // Indicates if more than the number of returned Hold for Pickup locations was found
 	NoHFPULocInd               string    `xml:"NoHFPULocInd,omitempty"`         // Indicates if there were no locations found in the RAU that support Hold for Pickup
 	NonExpeditedWTMsg          []string  `xml:"NonExpeditedWTMsg,omitempty"`    // Additional exception messaging
-	GlobalNonExpeditedTransMsg *transMsg `xml:"NonExpeditedTransMsg,omitempty"` // Non-Expedited Mail transportation messaging
+	GlobalNonExpeditedTransMsg *TransMsg `xml:"NonExpeditedTransMsg,omitempty"` // Non-Expedited Mail transportation messaging
 }
 
-type serviceStandard struct {
+type ServiceStandard struct {
 	ServiceStandardMessage string                `xml:"SvcStdMsg,omitempty"`  // Service Standard Message
 	ServiceStandardDays    string                `xml:"SvcStdDays,omitempty"` // Service Standard Days
-	Location               *nonExpeditedLocation `xml:"Location,omitempty"`   // Hold for Pickup Location information
+	Location               *NonExpeditedLocation `xml:"Location,omitempty"`   // Hold for Pickup Location information
 }
 
-type nonExpeditedLocation struct {
+type NonExpeditedLocation struct {
 	ScheduledDeliveryDate string                  `xml:"SchedDlvryDate,omitempty"`         // Scheduled Delivery Date
 	NonDeliveryDays       string                  `xml:"NonDeliveryDays,omitempty"`        // Non-Delivery Days
 	RAUName               string                  `xml:"RAUName,omitempty"`                // RAU Name
@@ -128,11 +210,11 @@ type nonExpeditedLocation struct {
 	ZIP                   string                  `xml:"ZIP,omitempty"`                    // Facility ZIP Code
 	City                  string                  `xml:"City,omitempty"`                   // RAU City
 	State                 string                  `xml:"State,omitempty"`                  // RAU State.
-	CloseTimes            *closeTimes             `xml:"CloseTimes,omitempty"`             // Close times by day of the week for Hold for Pickup location
-	NonExpeditedMsg       *nonExpeditedExceptions `xml:"NonExpeditedExceptions,omitempty"` // Additional exception messaging
+	CloseTimes            *CloseTimes             `xml:"CloseTimes,omitempty"`             // Close times by day of the week for Hold for Pickup location
+	NonExpeditedMsg       *NonExpeditedExceptions `xml:"NonExpeditedExceptions,omitempty"` // Additional exception messaging
 }
 
-type closeTimes struct {
+type CloseTimes struct {
 	M  string `xml:"M,omitempty"`  // Close Time for Monday
 	Tu string `xml:"Tu,omitempty"` // Close Time for Tuesday
 	W  string `xml:"W,omitempty"`  // Close Time for Wednesday
@@ -143,7 +225,7 @@ type closeTimes struct {
 	H  string `xml:"H,omitempty"`  // Close Time for Holiday
 }
 
-type transMsg struct {
+type TransMsg struct {
 	MsgCode string `xml:"MsgCode,omitempty"` // Transportation messaging code
 	Msg     string `xml:"Msg,omitempty"`     // Transportation messaging text
 }
