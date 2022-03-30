@@ -1,6 +1,10 @@
 package types
 
-type CityStateLookUpRequest struct {
+func (r *CityStateLookupRequest) ToHTTP() (string, error) {
+	return createRequest("CityStateLookup", r)
+}
+
+type CityStateLookupRequest struct {
 	request
 	ZIPCode []*Zip `xml:"ZipCode"`
 }
@@ -16,6 +20,6 @@ type ZipResponse struct {
 	State string `xml:"State"`
 }
 
-type CityStateLookUpResponse struct {
+type CityStateLookupResponse struct {
 	ZipResponse []*ZipResponse `xml:"ZipCode"`
 }
