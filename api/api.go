@@ -21,7 +21,7 @@ type request interface {
 	ToHTTP() (string, error)
 }
 
-type response interface {}
+type response interface{}
 
 func do(req request, res response) (err error) {
 	reqStr, err := req.ToHTTP()

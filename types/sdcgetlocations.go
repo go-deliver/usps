@@ -129,7 +129,7 @@ type ExpeditedCommitment struct {
 
 		"A0218", "B0218" = 2-Day at 6:00 PM
 	*/
-	CommitmentSeq string              `xml:"CommitmentSeq,omitempty"`
+	CommitmentSeq string               `xml:"CommitmentSeq,omitempty"`
 	Locations     []*ExpeditedLocation `xml:"Location,omitempty"` // Drop off location information
 }
 
