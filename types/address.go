@@ -26,5 +26,5 @@ type AddressResponse struct {
 	Business             string `xml:"Business,omitempty"`
 	CentralDeliveryPoint string `xml:"CentralDeliveryPoint,omitempty"`
 	Vacant               string `xml:"Vacant,omitempty"`
-	Error                Error  `xml:"Error,omitempty"`
+	Error                *Error  `xml:"Error,omitempty"`
 }
