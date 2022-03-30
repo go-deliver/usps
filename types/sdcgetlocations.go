@@ -6,7 +6,7 @@ func (r *SDCGetLocationsRequest) ToHTTP() (string, error) {
 
 // SDCGetLocationsRequest is the request sent to the USPS ServiceDeliveryGetLocations API
 type SDCGetLocationsRequest struct {
-	Request
+	request
 	/*
 		Defines mail class for commitment data.
 

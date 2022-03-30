@@ -5,7 +5,7 @@ func (r *HFPFacilityInfoRequest) ToHTTP() (string, error) {
 }
 
 type HFPFacilityInfoRequest struct {
-	Request
+	request
 	PickupCity  string `xml:"PickupCity"`
 	PickupState string `xml:"PickupState"`
 	PickupZIP   string `xml:"PickupZIP"`

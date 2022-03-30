@@ -1,4 +1,3 @@
 package types
 
-// IResponse interface (currently has no methods)
-type IResponse interface{}
+// Not much to do here.
