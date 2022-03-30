@@ -6,18 +6,7 @@ import (
 	"net/url"
 )
 
-// IRequest interface uses ToHTTP method to create a request string
-type IRequest interface {
-	// ToHTTP is the method to convert the Request to XML string
-	/*
-		func (r *Request) ToHTTP() (string, error) {
-			return createRequest(API_NAME, r)
-		}
-	*/
-	ToHTTP() (string, error)
-}
-
-type Request struct {
+type request struct {
 	USERID string `xml:"USERID,attr"` // Your Web Tools ID.
 }
 
@@ -30,9 +19,3 @@ func createRequest(api string, r interface{}) (string, error) {
 	requestURL.WriteString(api + "&XML=" + url.QueryEscape(string(xmlOut)))
 	return requestURL.String(), nil
 }
-
-/*
-type Request struct {
-	USERID string `xml:"USERID,attr"` // Your Web Tools ID.
-}
-*/

@@ -1,7 +1,7 @@
 package types
 
 type CityStateLookUpRequest struct {
-	Request
+	request
 	ZIPCode []*Zip `xml:"ZipCode"`
 }
 

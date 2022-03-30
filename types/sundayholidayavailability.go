@@ -5,7 +5,7 @@ func (r *SundayHolidayRequest) ToHTTP() (string, error) {
 }
 
 type SundayHolidayRequest struct {
-	Request
+	request
 	SundayHoliday string `xml:"SundayHoliday"` // Select Sunday or Holiday
 	FromZipCode   string `xml:"FromZipCode"` // 5 digit zip code from ZipCode
 	ToZipCode     string `xml:"ToZipCode"` // 5 digit zip code to ZipCode
