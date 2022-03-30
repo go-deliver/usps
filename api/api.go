@@ -17,7 +17,13 @@ type API struct {
 	Password string
 }
 
-func do(req types.IRequest, res types.IResponse) (err error) {
+type request interface {
+	ToHTTP() (string, error)
+}
+
+type response interface {}
+
+func do(req request, res response) (err error) {
 	reqStr, err := req.ToHTTP()
 	if err != nil {
 		return err
