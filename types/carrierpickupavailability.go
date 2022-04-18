@@ -1,9 +1,5 @@
 package types
 
-func (r *CarrierPickupAvailabilityRequest) ToHTTP() (string, error) {
-	return createRequest("CarrierPickupAvailability", r)
-}
-
 type CarrierPickupAvailabilityRequest struct {
 	request
 	FirmName     string `xml:"FirmName,omitempty"`

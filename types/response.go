@@ -1,4 +1,3 @@
 package types
 
-type response struct {
-}
+type response struct {}
