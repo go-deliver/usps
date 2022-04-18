@@ -1,7 +1,7 @@
 package types
 
-func (r *FirstClassMailRequest) ToHTTP() (string, error) {
-	return createRequest("FirstClassMail", r)
+func (r *FirstClassMailRequest) API() string {
+	return "FirstClassMail"
 }
 
 type FirstClassMailRequest struct {

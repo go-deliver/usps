@@ -1,7 +1,7 @@
 package types
 
-func (r *HFPFacilityInfoRequest) ToHTTP() (string, error) {
-	return createRequest("HFPFacilityInfo", r)
+func (r *HFPFacilityInfoRequest) API() string {
+	return "HFPFacilityInfo"
 }
 
 type HFPFacilityInfoRequest struct {

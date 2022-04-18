@@ -1,7 +1,7 @@
 package types
 
-func (r *ExpressMailCommitmentRequest) ToHTTP() (string, error) {
-	return createRequest("ExpressMailCommitment", r)
+func (r *ExpressMailCommitmentRequest) API() string {
+	return "ExpressMailCommitment"
 }
 
 type ExpressMailCommitmentRequest struct {

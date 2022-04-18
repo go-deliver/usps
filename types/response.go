@@ -1,3 +1,4 @@
 package types
 
-// Not much to do here.
+type response struct {
+}

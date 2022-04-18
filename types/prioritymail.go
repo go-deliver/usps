@@ -1,7 +1,7 @@
 package types
 
-func (r *PriorityMailRequest) ToHTTP() (string, error) {
-	return createRequest("PriorityMail", r)
+func (r *PriorityMailRequest) API() string {
+	return "PriorityMail"
 }
 
 type PriorityMailRequest struct {
@@ -14,6 +14,7 @@ type PriorityMailRequest struct {
 }
 
 type PriorityMailResponse struct {
+	response
 	OriginZIP               string `xml:"OriginZIP"`
 	DestinationZIP          string `xml:"DestinationZIP,omitempty"`
 	Days                    string `xml:"Days,omitempty"`

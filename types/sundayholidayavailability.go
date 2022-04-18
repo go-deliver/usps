@@ -1,7 +1,7 @@
 package types
 
-func (r *SundayHolidayRequest) ToHTTP() (string, error) {
-	return createRequest("SundayHolidayAvailability", r)
+func (r *SundayHolidayRequest) API() string {
+	return "SundayHolidayAvailability"
 }
 
 type SundayHolidayRequest struct {

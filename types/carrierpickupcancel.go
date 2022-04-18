@@ -1,7 +1,7 @@
 package types
 
-func (r *CarrierPickupCancelRequest) ToHTTP() (string, error) {
-	return createRequest("CarrierPickupCancel", r)
+func (r *CarrierPickupCancelRequest) API() string {
+	return "CarrierPickupCancel"
 }
 
 type CarrierPickupCancelRequest struct {
@@ -18,6 +18,7 @@ type CarrierPickupCancelRequest struct {
 }
 
 type CarrierPickupCancelResponse struct {
+	response
 	FirmName           string `xml:"FirmName"`
 	SuiteOrApt         string `xml:"SuiteOrApt"`
 	Address2           string `xml:"Address2"`

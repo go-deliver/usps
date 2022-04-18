@@ -1,7 +1,7 @@
 package types
 
-func (r *StandardBRequest) ToHTTP() (string, error) {
-	return createRequest("StandardB", r)
+func (r *StandardBRequest) API() string {
+	return "StandardB"
 }
 
 type StandardBRequest struct {
@@ -13,6 +13,7 @@ type StandardBRequest struct {
 }
 
 type StandardBResponse struct {
+	response
 	OriginZIP               string `xml:"OriginZIP"`
 	DestinationZIP          string `xml:"DestinationZIP,omitempty"`
 	Days                    string `xml:"Days,omitempty"`

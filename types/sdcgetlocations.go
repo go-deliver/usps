@@ -1,7 +1,7 @@
 package types
 
-func (r *SDCGetLocationsRequest) ToHTTP() (string, error) {
-	return createRequest("SDCGetLocations", r)
+func (r *SDCGetLocationsRequest) API() string {
+	return "SDCGetLocations"
 }
 
 // SDCGetLocationsRequest is the request sent to the USPS ServiceDeliveryGetLocations API
