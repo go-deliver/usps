@@ -1,9 +1,10 @@
 package api
 
 import (
+	"bytes"
 	"encoding/xml"
 	"errors"
-	"io"
+	"html"
 	"net/http"
 
 	"github.com/p-lau/usps/types"
@@ -11,58 +12,69 @@ import (
 
 const url string = "https://secure.shippingapis.com/ShippingAPI.dll?API="
 
-// API is the main API Interface
-type API struct {
-	Username string
-	Password string
+// Client is the main Client Interface
+type Client struct {
+	username   string
+	httpClient *http.Client
 }
 
 type request interface {
-	ToHTTP() (string, error)
+	API() string
+	SetUser(USERID string)
 }
 
-type response interface {}
 
-func do(req request, res response) (err error) {
-	reqStr, err := req.ToHTTP()
-	if err != nil {
-		return err
+func New() *Client {
+	return &Client{
+		httpClient: http.DefaultClient,
+		username: "",
 	}
-
-	body, err := call(reqStr)
-	if err != nil {
-		return err
-	}
-	if body == nil {
-		return errors.New("request error")
-	}
-
-	// Check to see if USPS returns an xml Error
-	xmlError := new(types.Error)
-	err = xml.Unmarshal(body, &xmlError)
-
-	if err != nil {
-		return err
-	}
-
-	if xmlError != nil && xmlError.Number != "" {
-		return xmlError
-	}
-
-	// Proceed to unmarshal the body
-	return xml.Unmarshal([]byte(body), res)
 }
 
-func call(req string) ([]byte, error) {
-	resp, err := http.DefaultClient.Get(url + req)
+func (c *Client) SetUser(USERID string) {
+	c.username = USERID
+}
+
+func (c *Client) SetHTTPClient(client *http.Client) {
+	c.httpClient = client
+}
+
+func (c *Client) Call(request request, response interface{}) error {
+	if c.username == "" {
+		return errors.New("username is required")
+	}
+	request.SetUser(c.username)
+	if c.httpClient == nil {
+		c.httpClient = http.DefaultClient
+	}
+
+	req, err := xml.Marshal(request)
 	if err != nil {
-		return nil, err
+		return err
+	}
+
+	body := bytes.NewBuffer(append([]byte("&XML="), req...))
+
+	resp, err := c.httpClient.Post(url+request.API(), "text/xml", body)
+	if err != nil {
+		return err
 	}
 	defer resp.Body.Close()
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
+
+	if resp.StatusCode != http.StatusOK {
+		return errors.New("HTTP Error: " + resp.Status)
 	}
 
-	return body, nil
+	decoder := xml.NewDecoder(resp.Body)
+
+	USPSError := new(types.Error)
+
+	if err = decoder.Decode(USPSError); err != nil {
+		return err
+	}
+	if USPSError.Description != "" {
+		return errors.New(html.UnescapeString(USPSError.Description))
+	}
+
+	return xml.NewDecoder(resp.Body).Decode(response)
 }

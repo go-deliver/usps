@@ -1,5 +1,5 @@
 // Ignore devcontainer.env file
 devcontainer.env
 
-// Use env.go to init() environment variables
-env.go
+// Use init_test.go to init() environment variables
+init_test.go
