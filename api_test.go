@@ -1,17 +1,16 @@
-package usps_test
+package usps
 
 import (
 	"encoding/xml"
 	"os"
 	"testing"
 
-	"github.com/p-lau/usps"
 	"github.com/p-lau/usps/types"
 )
 
 
 var (
-	client = usps.Init(os.Getenv("USPS_USERID"))
+	client = Init(os.Getenv("USPS_USERID"))
 )
 
 func TestAPI(t *testing.T) {
