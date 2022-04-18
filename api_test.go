@@ -11,7 +11,7 @@ import (
 
 
 var (
-	client = usps.Init(os.Getenv("USERID"))
+	client = usps.Init(os.Getenv("USPS_USERID"))
 )
 
 func TestAPI(t *testing.T) {
