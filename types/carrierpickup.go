@@ -1,6 +1,6 @@
 package types
 
-// Shared between CarrierPickupChange and CarrierPickupAvailability
+// Shared between CarrierPickup APIs
 
 type CarrierPickupPackage struct {
 	ServiceType string `xml:"ServiceType"`

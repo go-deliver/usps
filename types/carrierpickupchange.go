@@ -1,5 +1,9 @@
 package types
 
+func (r *CarrierPickupChangeRequest) API() string {
+	return "CarrierPickupChange"
+}
+
 type CarrierPickupChangeRequest struct {
 	request
 	FirstName           string                  `xml:"FirstName"`
