@@ -1,3 +1,3 @@
-module github.com/p-lau/usps
+module github.com/go-deliver/usps
 
 go 1.16
